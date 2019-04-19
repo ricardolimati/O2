@@ -1,0 +1,69 @@
+/**
+ * Folha de Estilos
+ * User: Ricardo Lima
+ * Date: 17/04/2019
+ * Time: 22:21
+ */
+body{
+    background: url('../imgs/bg.jpg') no-repeat center top fixed;
+    background-color: #000000;
+}
+h3{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: #ffffff;
+}
+h4{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 22px;
+    color: #ffffff;
+}
+h5{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #200c3e;
+}
+h1#10mb{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 60px;
+    color: #ffffff;
+}
+button, input{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    font-size: 14px;
+    color: #ffffff;
+}
+input.clInput{
+    background-color: transparent;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+input.clInput:focus{
+    background-color: transparent;
+    color: #feff16;
+    border-color: yellow;
+}
+
+@keyframes neon {
+    from{
+        filter: drop-shadow(0 0 0 var(--cor-neon));
+    }
+    to{
+        filter: drop-shadow(0 0 30px var(--cor-neon));
+    }
+}
+.neon1{
+    animation: neon 3s alternate infinite ease-in;
+}
+.neon1{
+    --cor-neon: #ff0;
+}
+
+div#bordaAssinantes{
+    border-color: #f967ff;
+}

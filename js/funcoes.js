@@ -1,0 +1,1 @@
+$("#iTelefone").mask("(00) 0000-00009", {placeholder:'', placeholderOnFocus: true});
