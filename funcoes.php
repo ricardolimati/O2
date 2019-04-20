@@ -5,6 +5,7 @@
  * Date: 18/04/2019
  * Time: 15:04
  */
+
 //Hor�rio do Brasil - S�o Paulo
 date_default_timezone_set("Brazil/East");
 function __autoload($classe){

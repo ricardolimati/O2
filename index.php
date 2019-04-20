@@ -15,7 +15,7 @@ include_once 'funcoes.php';
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
-        <link rel="icon" href="http://www.assim.net/wp-content/themes/Assim2018/images/favicon.png" type="image/x-icon" />
+        <link rel="icon" href="imgs/favicon.png" type="image/x-icon" />
         <title>Black Friday - Assim</title>
     </head>
 
@@ -50,7 +50,7 @@ include_once 'funcoes.php';
         </div>
         <div class="row mt-4">
             <div class="col-sm-12">
-                <form id="fContato" method="post">
+                <form id="fContato" name="fContato" action="index.php" method="post">
                     <div class="form-row">
                         <div class="form-group col-sm-12 col-lg-3 ml-1 mr-1">
                             <input type="hidden" name="iCadastro" id="iCadastro" value="1">
@@ -70,7 +70,7 @@ include_once 'funcoes.php';
             </div>
         </div>
         <div class="row mt-5" style="z-index: 1">
-            <div class="col-12 text-center" style="background: url('imgs/bgAssinantes.png') no-repeat center; z-index: 3000;filter: drop-shadow(0 0 10px #feff16);">
+            <div class="col-12 text-center" style="background: url('imgs/bgAssinantes.png') no-repeat center; z-index: 1000;filter: drop-shadow(0 0 10px #feff16);">
                 <h5>PARA NOVOS ASSINANTES</h5>
             </div>
         </div>
@@ -109,7 +109,7 @@ include_once 'funcoes.php';
         </div>
 
         <div class="row mt-5" style="z-index: 1">
-            <div class="col-8 text-center" style="background: url('imgs/bgAssinantes.png') no-repeat center; z-index: 3000; filter: drop-shadow(0 0 10px #feff16);">
+            <div class="col-8 text-center" style="background: url('imgs/bgAssinantes.png') no-repeat center; z-index: 1000; filter: drop-shadow(0 0 10px #feff16);">
                 <h5>PARA CLIENTES ASSIM</h5>
             </div>
         </div>
@@ -126,30 +126,34 @@ include_once 'funcoes.php';
         </div>
     </div>
     <?php
+    if(@Sessions::getSession("iEmail")==$_POST["iEmail"]){
+        $title = "Ops! Você já cadastrou esse email.";
+        $msg = "Insira dados diferentes, esse email já foi cadastrado!.";
+    }else{
         $erro = 0;
         $iCadastro = $_POST["iCadastro"];
-        if(!$_POST["iNome"] or !$_POST["iEmail"] or !$_POST["iTelefone"]){
+        if (!$_POST["iNome"] or !$_POST["iEmail"] or !$_POST["iTelefone"]) {
             $title = "Ops! Algo saiu errado tente novamente.";
             $msg = "Tente novamente, não conseguimos gravar sua informações!.";
             $erro++;
-        }else{
+        } else {
             $conn = ConnBD::Connectar();
-            $st = new Status();
-            $st->gravaStatus("ATIVO", $conn);
+            //$st = new Status();
+            //$st->gravaStatus("ATIVO", $conn);
 
             $cl = new Clientes();
-            $cl->gravaCliente($_POST["iNome"], $_POST["iTelefone"], $_POST["iEmail"], $st->getStCodigo(), $conn);
-            if($cl->getMensagem()=="Gravado com sucesso!")
-            {
+            $cl->gravaCliente($_POST["iNome"], $_POST["iTelefone"], $_POST["iEmail"], 1, $conn);
+            if ($cl->getMensagem() == "Gravado com sucesso!") {
                 $title = "Dados enviado com sucesso!";
                 $msg = $cl->getMensagem();
-            }else{
+            } else {
                 $title = "Ops! Algo saiu errado tente novamente.";
                 $msg = $cl->getMensagem();
                 $erro++;
             }
             $conn = @ConnBD::Desconectar();
         }
+    }
     ?>
     <!-- Modal -->
     <div class="modal fade" id="modalConfirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -180,14 +184,26 @@ include_once 'funcoes.php';
     <script src="js/jquery.mask.js"></script>
     <script src="js/funcoes.js"></script>
     <?php
-    if($iCadastro==1){
+    if($_SESSION["iEmail"]==$_POST["iEmail"]){
     ?>
     <script>
         $(document).ready(function(){
+            /* Abre a Modal do Bootstrap*/
             $("#modalConfirma").modal('show');
         });
     </script>
     <?php
+    }
+    if($iCadastro==1){
+    ?>
+    <script>
+        $(document).ready(function(){
+            /* Abre a Modal do Bootstrap*/
+            $("#modalConfirma").modal('show');
+        });
+    </script>
+    <?php
+        Sessions::addSession("iEmail", $_POST["iEmail"]);
     }
     ?>
     </body>
