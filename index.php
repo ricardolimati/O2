@@ -184,7 +184,7 @@ include_once 'funcoes.php';
     <script src="js/jquery.mask.js"></script>
     <script src="js/funcoes.js"></script>
     <?php
-    if($_SESSION["iEmail"]==$_POST["iEmail"]){
+    if($_SESSION["iEmail"]==$_POST["iEmail"] AND $_SESSION["iEmail"]<>""){
     ?>
     <script>
         $(document).ready(function(){
